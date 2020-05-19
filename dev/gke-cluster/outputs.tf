@@ -21,21 +21,5 @@ output "cluster_ca_certificate" {
   value       = module.gke_cluster.cluster_ca_certificate
 }
 
-output "cluster_name" {
-  description = "Module cluster name."
-  value       = module.gke_cluster.name
-}
-
-output "private_vpc" {
-  description = "Private network"
-  value       = module.vpc_network.private
-}
-
-output "service_account_email" {
-  # This may seem redundant with the `name` input, but it serves an important
-  # purpose. Terraform won't establish a dependency graph without this to interpolate on.
-  description = "The email address of the custom service account."
-  value       = module.gke_service_account.email
-}
 
 

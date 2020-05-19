@@ -35,7 +35,7 @@ variable "gke_tag" {
 variable "cluster_name" {
   description = "The name of the Kubernetes cluster."
   type        = string
-  default     = "magento-private-cluster"
+  default     = "magento-production-cluster"
 }
 
 variable "cluster_service_account_name" {
@@ -47,7 +47,7 @@ variable "cluster_service_account_name" {
 variable "cluster_service_account_description" {
   description = "A description of the custom service account used for the GKE cluster."
   type        = string
-  default     = "Magento GKE Cluster Service Account managed by Terraform"
+  default     = "Example GKE Cluster Service Account managed by Terraform"
 }
 
 variable "master_ipv4_cidr_block" {
