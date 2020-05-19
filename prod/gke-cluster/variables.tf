@@ -35,7 +35,7 @@ variable "gke_tag" {
 variable "cluster_name" {
   description = "The name of the Kubernetes cluster."
   type        = string
-  default     = "magento-production-cluster"
+  default     = "magento-prod-cluster"
 }
 
 variable "cluster_service_account_name" {
