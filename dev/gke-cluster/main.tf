@@ -219,7 +219,7 @@ resource "google_container_node_pool" "nfs_pool" {
 
   node_config {
     image_type   = "COS"
-    machine_type = "n1-standard-2"
+    machine_type = "n1-standard-4"
 
     labels = {
       private-nfs-pool = "nfs-drive"
@@ -230,6 +230,41 @@ resource "google_container_node_pool" "nfs_pool" {
     tags = [
       module.vpc_network.private,
       "private-nfs-pool",
+    ]
+
+    disk_size_gb = "10"
+    disk_type    = "pd-standard"
+    preemptible  = false
+
+    service_account = module.gke_service_account.email
+
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/cloud-platform",
+    ]
+  }
+}
+
+resource "google_container_node_pool" "elastic_pool" {
+  provider    = google-beta
+  name        = "elastic-node-pool"
+  location    = var.location
+  project     = var.project
+  cluster     = module.gke_cluster.name
+  node_count  = 1
+
+  node_config {
+    image_type   = "COS"
+    machine_type = "n1-standard-2"
+
+    labels = {
+      private-elastic-pool = "elastic-drive"
+    }
+
+    # Add a private tag to the instances. See the network access tier table for full details:
+    # https://github.com/gruntwork-io/terraform-google-network/tree/master/modules/vpc-network#access-tier
+    tags = [
+      module.vpc_network.private,
+      "private-elastic-pool",
     ]
 
     disk_size_gb = "10"
