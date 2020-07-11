@@ -105,6 +105,26 @@ module "vpc_network" {
   secondary_cidr_block = var.vpc_secondary_cidr_block
 }
 
+#------------------------------------------------------------------------------------------------------------------------
+# CREATE FIFREWALL RULE TO ALLOW ACCESS FOR ELASTICSEARTCH
+#------------------------------------------------------------------------------------------------------------------------
+resource "google_compute_firewall" "elastic-fw-rule" {
+  name    = "elasticsearch-firewall-rule"
+  network = module.vpc_network.network
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["9443"]
+  }
+
+  source_ranges = [var.master_ipv4_cidr_block]
+  source_tags   = [module.vpc_network.private]
+}
+
 # Use a random suffix to prevent overlap in network names
 resource "random_string" "suffix" {
   length  = 4
