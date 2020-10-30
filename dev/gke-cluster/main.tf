@@ -85,9 +85,10 @@ module "gke_service_account" {
   #source = "../../modules/gke-service-account"
   source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account?ref=v0.4.3"
 
-  name        = var.cluster_service_account_name
-  project     = var.project
-  description = var.cluster_service_account_description
+  name                    = var.cluster_service_account_name
+  project                 = var.project
+  description             = var.cluster_service_account_description
+  service_account_roles   = var.service_account_roles
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -106,15 +107,11 @@ module "vpc_network" {
 }
 
 #------------------------------------------------------------------------------------------------------------------------
-# CREATE FIFREWALL RULE TO ALLOW ACCESS FOR ELASTICSEARTCH
+# CREATE FIREWALL RULE TO ALLOW ACCESS FOR ELASTICSEARTCH
 #------------------------------------------------------------------------------------------------------------------------
 resource "google_compute_firewall" "elastic-fw-rule" {
   name    = "elasticsearch-firewall-rule"
   network = module.vpc_network.network
-
-  allow {
-    protocol = "icmp"
-  }
 
   allow {
     protocol = "tcp"
@@ -122,7 +119,7 @@ resource "google_compute_firewall" "elastic-fw-rule" {
   }
 
   source_ranges = [var.master_ipv4_cidr_block]
-  source_tags   = [module.vpc_network.private]
+  target_tags   = []
 }
 
 # Use a random suffix to prevent overlap in network names

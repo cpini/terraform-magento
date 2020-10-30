@@ -75,7 +75,7 @@ variable "vpc_secondary_cidr_block" {
 variable "enable_vertical_pod_autoscaling" {
   description = "Enable vertical pod autoscaling"
   type        = string
-  default     = true
+  default     = false
 }
 
 variable "node_port" {
@@ -88,4 +88,11 @@ variable "port_name" {
   description = "Port name"
   type        = string
   default     = "balancer port" 
+}
+
+# Need to apply storageAdmin as an additional role (GKE needs to read from private repo)
+variable "service_account_roles" {
+  description = "Additional roles to be added to the service account."
+  type        = list(string)
+  default     = ["roles/storage.admin"]
 }
