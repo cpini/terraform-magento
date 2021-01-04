@@ -2,4 +2,5 @@
 dev.BAK
 temp/
 test/
+*.txt
 *.terraform*

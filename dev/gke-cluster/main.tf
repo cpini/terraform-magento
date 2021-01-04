@@ -159,7 +159,7 @@ resource "google_container_node_pool" "node_pool" {
     machine_type = "n1-standard-2"
 
     labels = {
-      private-app-pool = "web-app"
+      "private-app-pool" = "web-app"
     }
 
     # Add a private tag to the instances. See the network access tier table for full details:
