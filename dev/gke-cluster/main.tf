@@ -14,13 +14,15 @@ terraform {
 # ---------------------------------------------------------------------------------------------------------------------
 
 provider "google" {
-  version = "~> 2.15"
+  # provider version deprecated in version 1.0
+  # version = "~> 2.15"
   project = var.project
   region  = var.region
 }
 
 provider "google-beta" {
-  version = "~> 2.15"
+  # provider version deprecated in version 1.0
+  # version = "~> 2.15"
   project = var.project
   region  = var.region
 }
@@ -34,7 +36,7 @@ module "gke_cluster" {
   # to a specific version of the modules, such as the following example:
   # source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-cluster?ref=v0.2.0"
   #source = "../../modules/gke-cluster"
-  source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-cluster?ref=v0.6.0"	
+  source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-cluster?ref=v0.10.0"	
 
   name = var.cluster_name
 
@@ -83,7 +85,7 @@ module "gke_service_account" {
   # to a specific version of the modules, such as the following example:
   # source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account?ref=v0.2.0"
   #source = "../../modules/gke-service-account"
-  source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account?ref=v0.6.0"
+  source = "github.com/gruntwork-io/terraform-google-gke.git//modules/gke-service-account?ref=v0.10.0"
 
   name                    = var.cluster_service_account_name
   project                 = var.project
@@ -96,7 +98,7 @@ module "gke_service_account" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 module "vpc_network" {
-  source = "github.com/gruntwork-io/terraform-google-network.git//modules/vpc-network?ref=v0.2.1"
+  source = "github.com/gruntwork-io/terraform-google-network.git//modules/vpc-network?ref=v0.9.0"
 
   name_prefix = "${var.cluster_name}-network-${random_string.suffix.result}"
   project     = var.project
